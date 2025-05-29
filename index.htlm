@@ -2,26 +2,32 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Redirección Secuencial</title>
+  <title>Redirección Global Secuencial</title>
   <script>
     const grupos = [
-      "https://chat.whatsapp.com/HsaBuLsrdPO4V21yjIQv47", // Grupo 1
-      "https://chat.whatsapp.com/LgnVlowLUYT9cZae0bEI5V", // Grupo 2
-      "https://chat.whatsapp.com/D4qSliHepxsEVmCFHm7fZK", // Grupo 3
-      "https://chat.whatsapp.com/KFm5iHFYDgdA5RJ7LXWddZ", // Grupo 4
-      "https://chat.whatsapp.com/Db2qc5V6ramIhAMh3eLcIC"  // Grupo 5
+      "https://chat.whatsapp.com/LGWAZmg40B3Ekvn0KALHIq", // Grupo 1
+      "https://chat.whatsapp.com/Jp4tcPTqWh4DqlrmxnP2TR", // Grupo 2
+      "https://chat.whatsapp.com/I6n46y08RJvC3iwmtxsGbX", // Grupo 3
+      "https://chat.whatsapp.com/Hrn0KsCAAYQF0aRBDMJCKF", // Grupo 4
+      "https://chat.whatsapp.com/CjOzhLyhxoFCqT1NJ7fGYZ"  // Grupo 5
     ];
 
-    // Al cargar la página, redirige secuencialmente y guarda la posición
-    window.onload = function () {
-      let index = parseInt(localStorage.getItem("grupoIndex")) || 0;
-      window.location.href = grupos[index];
-      index = (index + 1) % grupos.length;
-      localStorage.setItem("grupoIndex", index);
-    };
+    async function redirigir() {
+      try {
+        const res = await fetch("https://api.countapi.xyz/hit/teambrujita/vercel");
+        const data = await res.json();
+        const index = (data.value - 1) % grupos.length;
+        window.location.href = grupos[index];
+      } catch (error) {
+        console.error("Error en la redirección:", error);
+        document.body.innerHTML = '<p style="color:red">Error al redirigir. Intenta de nuevo más tarde.</p>';
+      }
+    }
+
+    window.onload = redirigir;
   </script>
 </head>
 <body>
-  <p>Redirigiendo...</p>
+  <p>Redirigiendo al grupo correspondiente...</p>
 </body>
 </html>
